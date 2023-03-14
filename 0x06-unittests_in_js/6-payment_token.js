@@ -1,5 +1,5 @@
-'use strict';
-function getPaymentTokenFromAPI(success) {
-  if (success) return Promise.resolve({ data: 'Successful response from the API' });
-}
-module.exports = getPaymentTokenFromAPI;
+const getPaymentTokenFromApi = (success) => new Promise((resolve, reject) => {
+  if (success) resolve({ data: 'Successful response from the API' });
+});
+
+module.exports = getPaymentTokenFromApi;

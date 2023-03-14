@@ -1,23 +1,27 @@
-'use strict';
-const chai = require('chai');
-const sinon = require('sinon');
+const { expect } = require('chai');
+const  { spy } = require('sinon');
+const sendPaymentRequestToApi = require('./5-payment');
 
-const Utils = require('./utils.js');
-const sendPaymentRequestToApi = require('./5-payment.js');
+describe('sendPaymentRequestToApi', () => {
+  let dummyfunc;
 
-describe('sendPaymentRequestToApi function', () => {
-  let spyConsole;
-  beforeEach(() => spyConsole = sinon.spy(console, 'log'));
-  afterEach(() => spyConsole.restore());
-
-  it('sendPaymentRequestToAPI(100, 20)', () => {
-    sendPaymentRequestToApi(100, 20);
-    chai.expect(spyConsole.calledOnce).to.be.true;
-    chai.expect(spyConsole.calledWith('The total is: 120')).to.be.true;
+  beforeEach(() => {
+    if (!dummyfunc) dummyfunc = spy(console);
   });
-  it('sendPaymentRequestToAPI(10, 10)', () => {
+
+  afterEach(() => {
+    dummyfunc.log.resetHistory();
+  });
+
+  it('sendPaymentRequestToApi(100, 20) logs "The total is: 120" to the console', () => {
+    sendPaymentRequestToApi(100, 20);
+    expect(dummyfunc.log.calledOnce).to.be.true
+    expect(dummyfunc.log.calledWith('The total is: 120')).to.be.true;
+  });
+
+  it('sendPaymentRequestToApi(10, 10) logs "The total is: 20" to the console', () => {
     sendPaymentRequestToApi(10, 10);
-    chai.expect(spyConsole.calledOnce).to.be.true;
-    chai.expect(spyConsole.calledWith('The total is: 20')).to.be.true;
+    expect(dummyfunc.log.calledOnce).to.be.true
+    expect(dummyfunc.log.calledWith('The total is: 20')).to.be.true;
   });
 });
